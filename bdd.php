@@ -1,6 +1,6 @@
 <?php
-$sername = "localhost";
-$dbname= "bdd_cpx";
+$servername = "localhost";
+$dbname= "bdd_e5";
 $dbusername = "root";
 $dbpassword= "";
 
