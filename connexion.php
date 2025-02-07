@@ -1,46 +1,53 @@
 <?php
+session_start(); // Démarrer la session
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sécurisation des entrées utilisateur
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-    include 'bdd.php';
+    include 'bdd.php'; // Inclusion du fichier de connexion à la base de données
 
     try {
+        // Connexion à la base de données avec PDO
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        // Préparation de la requête pour récupérer l'utilisateur avec l'email donné
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
+        // Vérifie si un utilisateur avec cet email existe
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
+            // Vérifie si le mot de passe fourni correspond au hash stocké
             if (password_verify($password, $user['password'])) {
                 $_SESSION['username'] = $user['username'];
-                echo "<p style='color: green;'>Connexion réussie ! </p>"; 
+                echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: accueil.php");
                 exit();
             } else {
-                echo "<p style='color: red;'>Mot de passe incorrect.</p>"; 
-
+                echo "<p style='color: red;'>Mot de passe incorrect.</p>";
             }
         } else {
-            echo "<p style='color: red;'> Email non trouvé.</p>";
-    } 
-    }  catch (PDOException $e) {
-    echo "Erreur " . $e->getMessage();
+            echo "<p style='color: red;'>Email non trouvé.</p>";
+        }
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
     }
-    $conn = null;
-    }
+    $conn = null; // Fermeture de la connexion
+}
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de connexion</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="signup-container">
