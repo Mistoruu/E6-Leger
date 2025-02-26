@@ -105,7 +105,8 @@ input[type="sumbit"] {
     cursor: pointer;
 }
 
-.signup-container {
+.signup-container,
+.profile-container {
     max-width: 400px;
     margin: auto;
     padding: 20px;

@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php include "navbar.php"?>
     <div class="signup-container">
         <h2>Connexion</h2>
         <form action="connexion.php" method="POST">
@@ -64,5 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <p>Pas encore inscrit ? <a href="inscription.php" class="register-link">Inscrivez-vous ici</a></p>
     </div>
+    <?php include "footer.php" ?>
 </body>
 </html>

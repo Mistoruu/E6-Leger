@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <?php include "navbar.php"?>
     <div class="signup-container">
         <h2>Inscription</h2>
         <form action="" method="POST" onsubmit="return validateForm()">
@@ -82,5 +83,6 @@
         $conn = null;
     }
     ?>
+<?php include "footer.php" ?>
 </body>
 </html>

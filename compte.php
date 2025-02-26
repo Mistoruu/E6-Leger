@@ -68,22 +68,23 @@ $conn = null;
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <?php //include 'navbar.php'; ?>
-    
-    <h2>Mon Profil</h2>
-    <form action="compte.php" method="POST">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="username" value="<?= htmlspecialchars($user['username']); ?>" required>
+    <?php include 'navbar.php'; ?>
+    <div class="profile-container">
+        <h2>Mon Profil</h2>
+        <form action="compte.php" method="POST">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" value="<?= htmlspecialchars($user['username']); ?>" required>
 
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" required> <!-- Correction ici -->
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" required> <!-- Correction ici -->
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password">
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password">
 
-        <input type="submit" value="Mettre à jour">
-    </form>
+            <input type="submit" value="Mettre à jour">
+        </form>
+    </div>
 
-    <?php //include 'footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
