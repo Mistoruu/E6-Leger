@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (password_verify($password, $admin['password'])) {
                 $_SESSION['admin'] = $admin['username'];
-                echo "<p style='color:green;'>Connexion admin réussie ! <p>";
+                echo "<p style='color:green;'>Connexion admin réussie ! </p>";
                 header("Location: admin_dashboard.php");
                 exit();
             } else {
@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h2>Connexion Admin</h2>
                 <form action="admin.php" method="POST">
                     <label for="email">Email : </label>
-                    <input for="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required>
 
                     <label for="password">Mot de passe : </label>
-                    <input for="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required>
 
                     <input type="submit" value="Se connecter">
                 </form>
