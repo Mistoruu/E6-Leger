@@ -42,7 +42,7 @@
         </div>
         <div class="navbar-right">
             <?php if (!isset($_SESSION['loggedin'])): ?>
-                <a href="#">Produit du site</a>
+                <a href="index.php">Catalogue</a>
                 <a href="compte.php">Profil</a>
                 <a href="connexion.php">Connexion</a>
                 <a href="inscription.php">S'inscrire</a>
