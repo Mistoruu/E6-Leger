@@ -26,8 +26,13 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de board Admin</title>
     <style>
-        table, th, td{
-            border: 1px solid black;
+        table, td, th {
+            border: 1px solid;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
     </style>
 </head>

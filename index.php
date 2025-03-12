@@ -6,7 +6,7 @@ try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbusername, $dbpassword);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $pdo->query("SELECT id, name, image, video, price FROM products");
+    $stmt = $pdo->query("SELECT id, name, image, price FROM products");
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
@@ -39,11 +39,8 @@ if (isset($_POST['add_to_cart'])){
 <div class="product-list">
     <?php foreach ($products as $product): ?>
         <div class="product-item">
-            <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']);?>">
-            <video controls>
-                <source src="<?php echo htmlspecialchars($product['video']); ?>" type="video/mp4"><!-- MKV ? -->$_COOKIE
-                Votre navigateur ne supporte pas les vidéos.
-            </video>
+            <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']);?>" class="product-img">
+            
             <h2><?php echo htmlspecialchars($product['name']); ?></h2>
             <p>Prix :€<?php echo htmlspecialchars($product['price']); ?></p>
             <form method="POST">
