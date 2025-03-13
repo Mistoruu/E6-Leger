@@ -21,7 +21,7 @@ if (!isset($_SESSION['username'])) {
     <header>
         <div class="header-container">
             <h2>Bienvenue <?php echo htmlspecialchars($_SESSION['username']); ?> ! &nbsp;&nbsp;</h2>
-            <form>
+            <form action="logout.php">
                 <button type="submit" name="logout" class="logout-button">Se déconnecter</button>
             </form>
         </div>
