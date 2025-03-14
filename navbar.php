@@ -35,20 +35,41 @@
         }
     </style>
 </head>
+
+<?php 
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <body>
     <div class="navbar">
         <div class="navbar-left">
-            <img src="images/logo.jpg" alt="Logo" class="navbar-log">
+            <img src="images/logo.jpg" alt="Logo" class="navbar-logo">
         </div>
+
+        <div class="search-bar">
+            <form action="search.php" method="get" style="display: flex; align-items: center;">
+                <input type="text" name="query" placeholder="Rechercher" required>
+                <button type="submit" style="background: none; border: none; padding: 0; margin-left: 5px;">
+                    <img src="src/images/loupe.png" alt="rechercher" class="search-icon">
+                </button>
+            </form>
+        </div>
+
         <div class="navbar-right">
-            <?php if (!isset($_SESSION['loggedin'])): ?>
+            <?php if (!isset($_SESSION['username'])): ?>
+                <a href="accueil.php">Accueil</a>
                 <a href="index.php">Catalogue</a>
                 <a href="compte.php">Profil</a>
-                <a href="connexion.php">Connexion</a>
+                <a href="connexion.php">Se connecter</a>
                 <a href="inscription.php">S'inscrire</a>
-                <?php else: ?>
-                <a href="#">Déconnexion</a>
-                <?php endif;?>
+            <?php else:?>
+                <a href="accueil.php">Accueil</a>
+                <a href="index.php">Catalogue</a>
+                <a href="compte.php">Profil</a>
+                <a href="logout.php">Déconnexion</a>
+            <?php endif;?>
         </div>
     </div>
 </body>
