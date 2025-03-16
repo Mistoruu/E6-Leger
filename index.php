@@ -51,7 +51,6 @@ try {
     exit();
 }
 
-// Ajout au panier
 if (isset($_POST['add_to_cart'])) {
     $product_id = $_POST['product_id'];
     if (!isset($_SESSION['cart'])) {
