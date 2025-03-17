@@ -33,6 +33,21 @@
             background-color: #555;
             border-radius: 5px;
         }
+
+        .cart-link {
+            display: inline-block;
+            padding: 5px;
+        }
+        
+        .cart-icon {
+            height: 30px;
+            width: 30px;
+            vertical-align: middle;
+        }
+        
+        .cart-link:hover .cart-icon {
+            filter: brightness(0.8);
+        }
     </style>
 </head>
 
@@ -62,13 +77,27 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="accueil.php">Accueil</a>
                 <a href="index.php">Catalogue</a>
                 <a href="compte.php">Profil</a>
-                <a href="connexion.php">Se connecter</a>
-                <a href="inscription.php">S'inscrire</a>
+                <a href="cart.php">
+                    <img src="src/images/cart-icon-white.png" alt="Panier" class="cart-icon" title="panier">
+                </a>
+                <a href="connexion.php">
+                    <img src="src/images/user-icon-white.png" alt="Connexion" class="cart-icon" title="connexion">
+                </a>   
+                <a href="inscription.php">
+                    <img src="src/images/signin-icon-white.png" alt="S'inscrire" class="cart-icon">
+                </a>
             <?php else:?>
                 <a href="accueil.php">Accueil</a>
                 <a href="index.php">Catalogue</a>
-                <a href="compte.php">Profil</a>
-                <a href="logout.php">Déconnexion</a>
+                <a href="cart.php">
+                    <img src="src/images/cart-icon-white.png" alt="Panier" class="cart-icon" title="panier">
+                </a>
+                <a href="compte.php">
+                    <img src="src/images/user-icon-white.png" alt="Utilisateur" class="cart-icon" title="compte">
+                </a>    
+                <a href="logout.php">
+                    <img src="src/images/logout-white.png" alt="Déconnexion" class="cart-icon" title="Déconnexion">
+                </a>
             <?php endif;?>
         </div>
     </div>
