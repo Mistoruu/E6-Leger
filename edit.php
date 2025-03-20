@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['admin'])) {
@@ -10,42 +9,38 @@ if (!isset($_SESSION['admin'])) {
 include 'bdd.php';
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbusername, $dbpassword);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if (isset($_GET['table']) && isset($_GET['id'])){
-        $table = $_GET['table'];
-        $id = $_GET['id'];
+    if (isset($_GET['table']) && isset($_GET['id'])) {
+        $table = htmlspecialchars($_GET['table']);
+        $id = (int) $_GET['id'];
 
-        $stmt = $conn->prepare("SELECT * FROM $table WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+        $stmt = $conn->prepare("SELECT * FROM `$table` WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) {
-            echo "Aucun enregistrement trouvé avec cet ID";
+            echo "Aucun enregistrement trouvé avec cet ID.";
             exit();
         }
 
-        if (!$_SERVER['REQUEST_METHOD'] == 'POST') {
-            $column = $_POST['columns'];
-
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $columns = $_POST['columns'];
             $setClause = [];
-            foreach ($columns as $column => $value) {
-                if ($column !== 'password') {
-                    $setClause[] = "$column = :$column";
-                }
-            }
-            $setClause = implode(',',$setClause);
+            $values = [];
 
-            $stmt = $conn->prepare("UPDATE $table SET $setClause WHERE id = :id");
             foreach ($columns as $column => $value) {
-                if ($column !== 'password') {
-                    $stmt ->bindParam(":column" , $value);
-                }
+                $setClause[] = "`$column` = :$column";
+                $values[":$column"] = $value;
             }
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
+
+            $setClause = implode(', ', $setClause);
+            $values[':id'] = $id;
+
+            $stmt = $conn->prepare("UPDATE `$table` SET $setClause WHERE id = :id");
+            $stmt->execute($values);
 
             header("Location: admin_dashboard.php");
             exit();
@@ -65,17 +60,18 @@ try {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>modifier l'enregistrement dans la table <?php echo "$table; "?></h2>
+    <h2>Modifier l'enregistrement dans la table <?php echo htmlspecialchars($table); ?></h2>
 
-    <form action="" method="POST">
+    <form method="POST">
         <?php foreach ($row as $column => $value): ?>
             <?php if ($column !== 'password'): ?>
-                <label for="<?php echo $column; ?>"><?php echo $column; ?>:</label>
-                <input type="text" name="columns[<?php echo $column; ?>]" value="<?php echo $value; ?>" id="<?php echo $column; ?>">
+                <label for="<?php echo $column; ?>"><?php echo htmlspecialchars($column); ?>:</label>
+                <input type="text" name="columns[<?php echo htmlspecialchars($column); ?>]" 
+                    value="<?php echo htmlspecialchars($value); ?>" id="<?php echo htmlspecialchars($column); ?>">
                 <br>
             <?php endif; ?>
-            <?php endforeach; ?>
-            <input type="submit" value="Enregistrer les modifications">
+        <?php endforeach; ?>
+        <input type="submit" value="Enregistrer les modifications">
     </form>
 </body>
 </html>

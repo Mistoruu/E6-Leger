@@ -83,7 +83,7 @@ try {
             } else {
                 echo "<p>Aucune donnée disponible dans la table $tablename. </p>";
             }
-            echo "<p><a href='create.php?table=$dbname'>Ajouter un nouvel enregistrement</a></p>";
+            echo "<p><a href='create.php?table=$tableName'>Ajouter un nouvel enregistrement</a></p>";
         }
     } else {
         echo "<p>Aucune table trouvée dans la base de données.</p>";
