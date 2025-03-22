@@ -67,6 +67,8 @@
 
             if ($stmt->rowCount() > 0) {
                 echo "<p style='color: red;'>Cet email est déjà utilisé.</p>";
+                header("Location: connexion.php");
+                exit();
             } else {
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
@@ -82,6 +84,7 @@
         }
         $conn = null;
     }
+
     ?>
 <?php include "footer.php" ?>
 </body>
