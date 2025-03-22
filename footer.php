@@ -9,7 +9,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: black;
+            background-color: #212121;
             color: white;
             text-align: center;
             padding: 10px;
@@ -23,7 +23,7 @@
         }
         .footer a:hover {
             text-decoration: underline;
-            
+            color: #c0c0c0;
         }
 
     </style>
