@@ -11,15 +11,12 @@ try {
     $minPrice = $priceResult['min_price'] ?? 0;
     $maxPrice = $priceResult['max_price'] ?? 35.00;
 
-    $sql = "SELECT id, name, image, price FROM products WHERE 1=1";
+    $sql = "SELECT id, name, image, video, price FROM products WHERE 1=1";
     $params = [];
 
     $filterConditions = [];
-    if (isset($_GET['filter_php'])) {
-        $filterConditions[] = "type = 'PHP'";
-    }
-    if (isset($_GET['filter_css'])) {
-        $filterConditions[] = "type = 'CSS'";
+    if (isset($_GET['filter_beginner'])) {
+        $filterConditions[] = "type = 'beginner'";
     }
     if (isset($_GET['filter_N5'])) {
         $filterConditions[] = "type = 'N5'";
@@ -69,6 +66,15 @@ if (isset($_POST['add_to_cart'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue | Japan Ease!</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 
@@ -78,8 +84,7 @@ if (isset($_POST['add_to_cart'])) {
 
 <form method="GET" id="filterForm">
     <label>
-        <input type="checkbox" name="filter_php" <?php echo isset($_GET['filter_php']) ? 'checked' : ''; ?>> PHP
-        <input type="checkbox" name="filter_css" <?php echo isset($_GET['filter_css']) ? 'checked' : ''; ?>> CSS
+        <input type="checkbox" name="filter_beginner" <?php echo isset($_GET['filter_beginner']) ? 'checked' : ''; ?>> Débutant
         <input type="checkbox" name="filter_N5" <?php echo isset($_GET['filter_N5']) ? 'checked' : ''; ?>> N5
         <input type="checkbox" name="filter_N4" <?php echo isset($_GET['filter_N4']) ? 'checked' : ''; ?>> N4
     </label>
@@ -93,15 +98,23 @@ if (isset($_POST['add_to_cart'])) {
         <span>Prix min: <span id="price-min"><?php echo isset($_GET['price_min']) ? $_GET['price_min'] : $minPrice; ?></span> €</span>
         <span>Prix max: <span id="price-max"><?php echo isset($_GET['price_max']) ? $_GET['price_max'] : $maxPrice; ?></span> €</span>
     </div>
-
-    <button type="submit">Appliquer les filtres</button>
 </form>
 
 <div class="product-list">
     <?php foreach ($products as $product): ?>
         <div class="product-item">
+            <div class="product-media">
             <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-img">
-            <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+            <video class="product-video" controls autoplay loop muted>
+                <source src="<?php echo htmlspecialchars($product['video']); ?>" type="video/mp4">
+                Votre navigateur ne supporte pas les vidéos.
+            </video>
+            </div>
+            <h2>
+                <a href="video.php?id=<?= htmlspecialchars($product['id']) ?>">
+                    <?php echo htmlspecialchars($product['name']); ?>
+                </a>
+            </h2>
             <p>Prix : €<?php echo htmlspecialchars($product['price']); ?></p>
             <form method="POST">
                 <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
