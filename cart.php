@@ -57,6 +57,104 @@ if (isset($_POST['remove_item'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panier</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+table img {
+    max-width: 100px;
+    border-radius: 5px;
+}
+
+.cart p {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+    color: #333;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+    color: black;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+button:hover {
+    background-color: #45a049;
+}
+
+button[name="remove_item"] {
+    background-color: #FF4C4C;
+}
+
+button[name="remove_item"]:hover {
+    background-color: #FF3333;
+}
+
+button[name="clear_cart"] {
+    background-color: #FF9800;
+}
+
+button[name="clear_cart"]:hover {
+    background-color: #FF7700;
+}
+    </style>
 </head>
 <body>
     <?php include 'navbar.php' ?>
@@ -101,7 +199,7 @@ if (isset($_POST['remove_item'])) {
             <?php endforeach ?>
             </tbody>
         </table>
-        <p>Total : €<?php echo $total; ?></p>
+        <p class="cart">Total : €<?php echo $total; ?></p>
         <form method="POST">
             <button type="submit" name="clear_cart">Vider le Panier</button>
         </form>
@@ -109,7 +207,7 @@ if (isset($_POST['remove_item'])) {
             <button type="submit">Finaliser le Panier</button>
         </form>
         <?php else: ?>
-            <p>Votre panier est vide.</p>
+            <p class="cart">Votre panier est vide.</p>
         <?php endif; ?>
         <a href="index.php">Retourner au Catalogue</a>
 
