@@ -32,12 +32,23 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($results)): ?>
             <?php foreach($results as $product): ?>  
             <div class="product-item">
-                <img src="<?php echo htmlspecialchars($product['image']) ?>" alt="<?php echo htmlspecialchars($product['name']) ?>" class="product-img">
-                <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+                <div class="product-media">
+                    <img src="<?php echo htmlspecialchars($product['image']) ?>" alt="<?php echo htmlspecialchars($product['name']) ?>" class="product-img">
+                    <video class="product-video" controls muted autoplay loop>
+                    <source src="<?= htmlspecialchars($product['video']) ?>" type="video/mp4">
+                        Votre navigateur ne supporte pas les vidéos.
+                    </video>
+                </div>
+                <h2>
+                    <a href="video.php?id=<?= htmlspecialchars($product['id']) ?>">
+                        <?php echo htmlspecialchars($product['name']); ?>
+                    </a>
+                </h2>
                 <p>Prix :€<?php echo htmlspecialchars($product['price']); ?></p>
+
                 <form method="POST" action="add_to_cart.php">
-                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
-                <button type="submit" name="add_to_cart">Ajouter au panier </button>
+                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+                    <button type="submit" name="add_to_cart">Ajouter au panier </button>
                 </form>
             </div>
         <?php endforeach; ?>

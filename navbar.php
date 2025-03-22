@@ -1,3 +1,31 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include 'bdd.php';
+
+$favoris_exist = false;
+
+if (isset($_SESSION['username'])) {
+    try {
+        if (!isset($pdo)) {
+            $pdo = new PDO("mysql:host=$servername;dbname=$dbname",$dbusername,$dbpassword);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM favoris WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $_SESSION['username']]);
+        $count = $stmt->fetchColumn();
+
+        if ($count > 0) {
+            $favoris_exist = true;
+        }
+    } catch (PDOException $e) {
+        error_log("Erreur : " . $e->getMessage());
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +41,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: black;
+            background-color: #212121;
+    	    box-shadow: 0 2px 6px #00000029;
             padding: 10px 20px;
             z-index: 1000;
         }
@@ -48,6 +77,13 @@
         .cart-link:hover .cart-icon {
             filter: brightness(0.8);
         }
+        .search-icon {
+            height: 28px;
+            width: 28px;
+        }
+        .btn-search {
+            width: 40px;
+        }
     </style>
 </head>
 
@@ -60,13 +96,13 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
     <div class="navbar">
         <div class="navbar-left">
-            <img src="images/logo.jpg" alt="Logo" class="navbar-logo">
+            <img src="src/images/japanease-logo.png" alt="Logo" class="navbar-logo">
         </div>
 
         <div class="search-bar">
             <form action="search.php" method="get" style="display: flex; align-items: center;">
                 <input type="text" name="query" placeholder="Rechercher" required>
-                <button type="submit" style="background: none; border: none; padding: 0; margin-left: 5px;">
+                <button class="btn-search" type="submit" style="background: none; border: none; padding: 0; margin-left: 5px;">
                     <img src="src/images/loupe.png" alt="rechercher" class="search-icon">
                 </button>
             </form>
@@ -89,9 +125,14 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php else:?>
                 <a href="accueil.php">Accueil</a>
                 <a href="index.php">Catalogue</a>
+                <a href="history.php">Historique</a>
+                <a href="favoris.php" class="cart-link">
+                    <img src="src/images/heart-navbar.png" alt="Favoris" class="cart-icon">
+                </a>
                 <a href="cart.php">
                     <img src="src/images/cart-icon-white.png" alt="Panier" class="cart-icon" title="panier">
                 </a>
+                
                 <a href="compte.php">
                     <img src="src/images/user-icon-white.png" alt="Utilisateur" class="cart-icon" title="compte">
                 </a>    

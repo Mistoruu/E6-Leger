@@ -4,13 +4,19 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
+table,
+td,
+th {
+    border: 1px solid;
+}
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    background-color: white;
+    background-color: #f3f5f8;
 }
 
 .signup-container {
@@ -139,4 +145,171 @@ input[type="sumbit"] {
 
 .register-link2:hover {
     text-decoration: underline;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.product-item {
+    width: 30%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.product-media {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-img {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out;
+}
+.product-video {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.product-item:hover .product-img {
+    opacity: 0;
+}
+
+.product-item:hover .product-video {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.product-item h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.product-item p {
+    font-size: 1em;
+    color: #007bff;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product-item button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.product-item button:hover {
+    background-color: #218838;
+}
+
+.product-item form {
+    margin-top: 15px;
+}
+
+#filterForm {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#filterForm label {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+#filterForm input[type="checkbox"] {
+    margin-right: 5px;
+    accent-color: #007bff;
+}
+
+.price-slider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.price-slider input[type="range"] {
+    -webkit-appearance: none;
+    width: 45%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.price-slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.price-slider input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #555;
+}
+
+.price-values span {
+    font-weight: bold;
+    color: #333;
 }
