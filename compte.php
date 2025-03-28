@@ -2,7 +2,6 @@
 session_start();
 include 'bdd.php';
 
-// Vérifie si l'utilisateur est connecté, sinon redirige vers la page de connexion
 if (!isset($_SESSION['username'])) {
     header("Location: connexion.php");
     exit();
@@ -10,53 +9,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-try {
-    // Connexion à la base de données avec PDO
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Récupère les informations de l'utilisateur connecté
-    $stmt = $conn->prepare("SELECT id, username, email FROM users WHERE username = :username");
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$user) {
-        echo "Utilisateur introuvable";
-        exit();
-    }
-
-    // Vérifie si le formulaire a été soumis
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $newUsername = htmlspecialchars(trim($_POST['username']));
-        $newEmail = htmlspecialchars(trim($_POST['email']));
-        $newPassword = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
-        
-        try {
-            // Prépare la requête SQL de mise à jour
-            $sql = "UPDATE users SET username = :username, email = :email" . ($newPassword ? ", password = :password" : "") . " WHERE id = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':username', $newUsername);
-            $stmt->bindParam(':email', $newEmail);
-            if ($newPassword) {
-                $stmt->bindParam(':password', $newPassword); // Correction du bindParam (manquait le ':')
-            }
-            $stmt->bindParam(':id', $user['id']);
-            $stmt->execute();
-
-            // Met à jour les informations de session
-            $_SESSION['username'] = $newUsername;
-            $_SESSION['email'] = $newEmail;
-
-            echo "<p style='color: green;'>Informations mises à jour avec succès.</p>"; // Correction du problème de guillemets
-        } catch (PDOException $e) {
-            echo "Erreur : " . $e->getMessage();
-        }
-    } 
-} catch (PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
-}
-$conn = null;
 ?>
 
 <!DOCTYPE html>
@@ -66,23 +19,88 @@ $conn = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Profil</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+
+        .profile {
+    text-align: center;
+    margin: 20px auto;
+        }
+        .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(25% - 20px); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.card p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.card .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.card .btn:hover {
+    background-color: #0056b3;
+}
+    </style>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
-    <div class="profile-container">
-        <h2>Mon Profil</h2>
-        <form action="compte.php" method="POST">
-            <label for="username">Nom d'utilisateur :</label>
-            <input type="text" id="username" name="username" value="<?= htmlspecialchars($user['username']); ?>" required>
+    <div class="profile">
+    <h1>Bienvenue, <?= htmlspecialchars($username); ?> !</h1>
+    <p>Voici les options disponibles pour gérer votre compte :</p>
+    </div>
+    <div class="cards-container">
+    <!-- Security Card -->
+    <div class="card">
+        <h3>Connexion & sécurité</h3>
+        <p>Modifier l'email et le mot de passe de votre compte</p>
+        <a href="update_profile.php" class="btn">Modifier le Profil</a>
+    </div>
 
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" required> <!-- Correction ici -->
+    <!-- History Card -->
+    <div class="card">
+        <h3>Historique</h3>
+        <p>Consultez votre historique d'activités.</p>
+        <a href="history.php" class="btn">Voir l'historique</a>
+    </div>
 
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password">
+    <!-- Contact Card -->
+    <div class="card">
+        <h3>Contact</h3>
+        <p>Besoin d'aide ? Contactez notre support.</p>
+        <a href="contact.php" class="btn">Nous contacter</a>
+    </div>
 
-            <input type="submit" value="Mettre à jour">
-        </form>
+    <!-- Address Card -->
+    <div class="card">
+        <h3>Adresse</h3>
+        <p>Gérez vos informations d'adresse.</p>
+        <a href="address.php" class="btn">Modifier l'adresse</a>
+    </div>
     </div>
 
     <?php include 'footer.php'; ?>
