@@ -125,7 +125,6 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php else:?>
                 <a href="accueil.php">Accueil</a>
                 <a href="index.php">Catalogue</a>
-                <a href="history.php">Historique</a>
                 <a href="favoris.php" class="cart-link">
                     <img src="src/images/heart-navbar.png" alt="Favoris" class="cart-icon">
                 </a>
