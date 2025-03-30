@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: connexion.php");
-    exit();
-}
+date_default_timezone_set('Europe/Paris');
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
