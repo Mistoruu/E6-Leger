@@ -1,28 +1,23 @@
 <?php
-session_start(); // Démarrer la session
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sécurisation des entrées utilisateur
+    
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
 
-    include 'bdd.php'; // Inclusion du fichier de connexion à la base de données
+    include 'bdd.php';
 
     try {
-        // Connexion à la base de données avec PDO
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $dbusername, $dbpassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Préparation de la requête pour récupérer l'utilisateur avec l'email donné
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
-        // Vérifie si un utilisateur avec cet email existe
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            // Vérifie si le mot de passe fourni correspond au hash stocké
             if (password_verify($password, $user['password'])) {
                 $_SESSION['username'] = $user['username'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
@@ -37,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();
     }
-    $conn = null; // Fermeture de la connexion
+    $conn = null; 
 }
 ?>
 
@@ -64,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
 
         <p>Pas encore inscrit ? <a href="inscription.php" class="register-link">Inscrivez-vous ici</a></p>
+        <p>Mot de passe oublié ? <a href="reset_password_request.php" class="-link">Réinitialiser ici</a></p>
     </div>
     <?php include "footer.php" ?>
 </body>
