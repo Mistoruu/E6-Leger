@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $user['password'])) {
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['email'] = $user['email'];
                 echo "<p style='color: green;'>Connexion réussie !</p>";
                 header("Location: accueil.php");
                 exit();
