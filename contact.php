@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-bottom: 20px;
         }
 
-        form {
+        .form-contact{
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2>Contactez notre Service Après-Vente</h2>
         <?php if (isset($success)) echo "<p style='color: green;'>$success</p>"; ?>
         <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
-        <form action="contact.php" method="POST">
+        <form action="contact.php" method="POST" class="form-contact">
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" required>
             
