@@ -61,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p>Pas encore inscrit ? <a href="inscription.php" class="register-link">Inscrivez-vous ici</a></p>
         <p>Mot de passe oublié ? <a href="reset_password_request.php" class="-link">Réinitialiser ici</a></p>
     </div>
+    <?php if (isset($_SESSION['success'])) {
+    echo "<p style='color: green; text-align: center;'>" . $_SESSION['success'] . "</p>";
+    unset($_SESSION['success']);
+} ?>
     <?php include "footer.php" ?>
 </body>
 </html>
