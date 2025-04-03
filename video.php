@@ -39,6 +39,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,7 +77,7 @@ try {
             margin-bottom: 10px;
         }
 
-        p {
+        .text {
             margin: 10px 0;
             line-height: 1.6;
         }
@@ -162,7 +163,7 @@ try {
         }
         
     </style>
-    <title><? echo htmlspecialchars($video['name']); ?></title>
+    <title><?php echo htmlspecialchars($video['name']); ?></title>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
@@ -177,10 +178,10 @@ try {
             <video src="<?= htmlspecialchars($video['video']); ?>" controls type="video/mp4">
                 Votre navigateur ne supporte pas les vidéos.
             </video>
-            <p><strong>Description : </strong> <?= htmlspecialchars($video['description']);?><br></p>
+            <p class="text"><strong>Description : </strong> <?= htmlspecialchars($video['description']);?><br></p>
             <div class="details-container">
                 <div class="details-left">
-                <p>
+                <p class="text">
                     <strong>Date de mise en ligne : </strong> <?= htmlspecialchars($video['upload_date']);?><br>
                     <strong>Durée : </strong> <?= htmlspecialchars($video['duration']);?><br>
                 </p>
@@ -193,6 +194,7 @@ try {
                 </div>
             </div>
         </div>
+        <?php include 'footer.php'; ?>
     </div>
 
     <script>
