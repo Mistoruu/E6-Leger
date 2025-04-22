@@ -3,7 +3,7 @@
 Projet réalisé dans le cadre de l’épreuve E6 – BTS SIO SLAM  
 Ce site permet aux utilisateurs de consulter un catalogue de formations, créer un compte, ajouter des produits aux favoris, simuler des commandes, et gérer le tout via un espace admin.
 
-## 🛠 Fonctionnalités principales
+##  Fonctionnalités principales
 
 ### Utilisateurs (Frontend)
 - Page d’accueil
